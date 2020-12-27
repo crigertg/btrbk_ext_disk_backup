@@ -16,6 +16,8 @@ sudo mkdir -p /mnt/btr_backup
 sudo mount /dev/mapper/btr_backup /mnt/btr_backup
 
 sudo btrbk -c ./btrbk.conf -v run
+sudo btrfs balance start -dusage=50 -dlimit=4 -musage=50 -mlimit=2 /mnt/btr_backup
+sudo btrfs scrub start -B /mnt/btr_backup
 
 sync
 sleep 5
