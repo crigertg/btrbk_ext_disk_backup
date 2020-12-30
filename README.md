@@ -43,8 +43,16 @@ In this example the external disk is `/dev/sdb`. Please check with `lsblk` and `
    ```
    sudo cryptsetup luksAddKey /dev/sdX /root/keyfile 
    ```
+
+6. Open the LUKS device and format it with `btrfs`
+
+   ```
+   sudo cryptsetup luksOpen /dev/sdb1 backup_disk
+   sudo mkfs.btrfs /dev/mapper/backup_disk
+   sudo cryptsetup luksClose backup_disk
+   ```
    
-6. The `btrbk.conf` assumes that you have mounted your local `btrfs` partition with all suvolumes in `/mnt/btr_pool` and have a subvolume `@snapshots` in it. I backup my `@` and `@home` subvolumes, you may need to change this in the `btrbk.conf`. The dir should look like this:
+7. The `btrbk.conf` assumes that you have mounted your local `btrfs` partition with all suvolumes in `/mnt/btr_pool` and have a subvolume `@snapshots` in it. I backup my `@` and `@home` subvolumes, you may need to change this in the `btrbk.conf`. The dir should look like this:
 
    ```
    $ ls /mnt/btr_pool/
@@ -58,12 +66,12 @@ In this example the external disk is `/dev/sdb`. Please check with `lsblk` and `
    UUID=78fa5e8c-dc17-4f58-bada-00c1f3e935f3	/mnt/btr_pool         	btrfs     	rw,noatime,compress=zstd:3,ssd,space_cache,commit=120	0 0
    ```
    
-7. now you need to to a `btrbk_external_disk.vars` file. You can copy the `btrbk_external_disk.vars.example` file.
+8. now you need to to a `btrbk_external_disk.vars` file. You can copy the `btrbk_external_disk.vars.example` file.
    
-   - To get the `BACKUP_DISK_UUID` use `lsblk -f` which will show your blockdevices with their corresponding UUIDs.
+   - To get the `BACKUP_DISK_UUID` use `lsblk -f` which will show your blockdevices with their corresponding UUIDs. You need the UUID from the LUKS device, not the mounted LUKS device which holds the btrfs volume.
    - Check if you need the path to your keyfile and update `LUKS_KEYFILE`.
    
-8. If the devices and the path is present you should be able to run `bash run_btrbk_external_disk.sh`
+9. If the devices and the path is present you should be able to run `bash run_btrbk_external_disk.sh`
 
 # running your backup
 
