@@ -1,3 +1,4 @@
 BACKUP_DISK_UUID=f08be569-7fa8-4db6-9bee-693b2b8dd82b
 LUKS_KEYFILE=/crypto_keyfile.bin
+MOUNT_DIR='/mnt/btr_backup'
 

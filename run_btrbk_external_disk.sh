@@ -11,18 +11,10 @@ source "${SOURCEFILE:=./btrbk_external_disk.vars}"
 [ -z "${BACKUP_DISK_UUID}" ] && echo 'Unset BACKUP_DISK_UUID' && exit 1
 [ -z "${LUKS_KEYFILE}" ] && echo 'Unset LUKS_KEYFILE' && exit 1
 
-sudo cryptsetup luksOpen /dev/disk/by-uuid/"${BACKUP_DISK_UUID}" btr_backup --key-file "${LUKS_KEYFILE}"
-sudo mkdir -p /mnt/btr_backup
-sudo mount /dev/mapper/btr_backup /mnt/btr_backup
+source ./btrbk_external_functions.sh
 
+mount_encrypted_backup_disk "${BACKUP_DISK_UUID}" "${LUKS_KEYFILE}" "${MOUNT_DIR}"
 sudo btrbk -c ./btrbk.conf -v run
 sudo btrfs balance start -dusage=50 -dlimit=4 -musage=50 -mlimit=2 /mnt/btr_backup
 sudo btrfs scrub start -B /mnt/btr_backup
-
-sync
-sleep 5
-sudo umount /mnt/btr_backup
-sleep 5
-sudo cryptsetup luksClose btr_backup
-
-
+umount_encrypted_backup_disk "${MOUNT_DIR}"
