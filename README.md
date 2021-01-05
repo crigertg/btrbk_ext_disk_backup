@@ -66,7 +66,7 @@ In this example the external disk is `/dev/sdb`. Please check with `lsblk` and `
    UUID=78fa5e8c-dc17-4f58-bada-00c1f3e935f3	/mnt/btr_pool         	btrfs     	rw,noatime,compress=zstd:3,ssd,space_cache,commit=120	0 0
    ```
    
-8. now you need to to a `btrbk_external_disk.vars` file. You can copy the `btrbk_external_disk.vars.example` file.
+8. now you need to add the `btrbk_external_disk.vars` file. You can copy the `btrbk_external_disk.vars.example` file.
    
    - To get the `BACKUP_DISK_UUID` use `lsblk -f` which will show your blockdevices with their corresponding UUIDs. You need the UUID from the LUKS device, not the mounted LUKS device which holds the btrfs volume.
    - Check if you need the path to your keyfile and update `LUKS_KEYFILE`.
