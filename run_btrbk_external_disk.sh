@@ -10,6 +10,7 @@ source "${SOURCEFILE:=./btrbk_external_disk.vars}"
 
 [ -z "${BACKUP_DISK_UUID}" ] && echo 'Unset BACKUP_DISK_UUID' && exit 1
 [ -z "${LUKS_KEYFILE}" ] && echo 'Unset LUKS_KEYFILE' && exit 1
+[ -z "${MOUNT_DIR}" ] && echo 'Unset MOUNT_DIR' && exit 1
 
 source ./btrbk_external_functions.sh
 
