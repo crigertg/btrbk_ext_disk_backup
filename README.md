@@ -1,4 +1,4 @@
-# btrfs_ext_disk_backu
+# btrfs_ext_disk_backup
 
 I've created this script to mirror local btrfs snapshots via [btrbk](https://github.com/digint/btrbk) to an external disk (for e.g. USB device). 
 
