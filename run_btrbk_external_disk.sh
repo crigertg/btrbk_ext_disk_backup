@@ -16,7 +16,7 @@ source ./btrbk_external_functions.sh
 
 mount_encrypted_backup_disk "${BACKUP_DISK_UUID}" "${LUKS_KEYFILE}" "${MOUNT_DIR}"
 sudo btrbk -c ./btrbk.conf -v run
-sudo btrfs balance start -dusage=50 -dlimit=4 -musage=50 -mlimit=2 /mnt/btr_backup
+sudo btrfs balance start -dusage=50 -dlimit=4 -musage=50 -mlimit=2 "${MOUNT_DIR}"
 sudo btrfs filesystem df "${MOUNT_DIR}"
-sudo btrfs scrub start -B /mnt/btr_backup
+sudo btrfs scrub start -B "${MOUNT_DIR}"
 umount_encrypted_backup_disk "${MOUNT_DIR}"
